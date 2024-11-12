@@ -1,0 +1,16 @@
+- name: Deploy application to server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Pull the latest Docker image
+      docker_image:
+        name: mariemki/my-first-image
+        source: pull
+
+    - name: Start the Docker container
+      docker_container:
+        name: my-application
+        image: mariemki/my-first-image
+        state: started
+        ports:
+          - "8081:8080"
