@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-application
-        image: mariemki/my-first-image:latest
+        image: noortl/myapp:1.0
         ports:
         - containerPort: 8081
 ---
