@@ -1,0 +1,50 @@
+---
+- name: Deploy application to Kubernetes
+  hosts: localhost
+  tasks:
+
+    - name: Create the Kubernetes Deployment
+      kubernetes.core.k8s:
+        kubeconfig: "/mnt/c/Users/nourt/.kube/config"  
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: my-application-deployment
+            namespace: default  # Specify the namespace here
+          spec:
+            replicas: 3
+            selector:
+              matchLabels:
+                app: my-application
+            template:
+              metadata:
+                labels:
+                  app: my-application
+              spec:
+                containers:
+                - name: my-application
+                  image: noortl/myapp:1.0
+                  ports:
+                  - containerPort: 3000
+
+    - name: Create the Kubernetes Service
+      kubernetes.core.k8s:
+        kubeconfig: "/mnt/c/Users/nourt/.kube/config"
+        state: present  
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: my-application-service
+            namespace: default  # Specify the namespace here
+          spec:
+            selector:
+              app: my-application
+            ports:
+              - protocol: TCP
+                port: 80
+                targetPort: 8081
+                nodePort: 30003
+            type: NodePort
