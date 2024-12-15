@@ -35,7 +35,7 @@ resource "azurerm_linux_web_app" "webapp" {
   }
 
   # Enable GitHub Deployment (or another Git provider)
-  app_service_build_settings {
+  source_control {
     repository_url      = "https://github.com/noortl1012/devopstp.git"  # Change this to your GitHub repository URL
     branch              = "master"  # You can use another branch if needed
   }
