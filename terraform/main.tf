@@ -25,6 +25,10 @@ resource "azurerm_linux_web_app" "webapp" {
   resource_group_name = azurerm_resource_group.rg.name
   service_plan_id     = azurerm_service_plan.asp.id
 
+  # Configuration to use Node.js
+  site_config {
+  }
+
   app_settings = {
     "WEBSITE_NODE_DEFAULT_VERSION" = "14-lts"
   }
