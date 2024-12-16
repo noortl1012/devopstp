@@ -34,13 +34,14 @@ resource "azurerm_linux_web_app" "webapp" {
     "WEBSITE_NODE_DEFAULT_VERSION" = "14-lts"
   }
 
-  # Enable GitHub Deployment (or another Git provider)
-  source_control {
-    repository_url      = "https://github.com/noortl1012/devopstp.git"  # Change this to your GitHub repository URL
-    branch              = "master"  # You can use another branch if needed
-  }
-
   tags = {
     environment = "dev"
   }
+}
+
+# Source Control Integration (GitHub)
+resource "azurerm_app_service_source_control" "source_control" {
+  app_id   = azurerm_linux_web_app.webapp.id
+  repo_url = "https://github.com/noortl1012/devopstp.git"  # GitHub repository URL
+  branch   = "master"  # Git branch to deploy from
 }
